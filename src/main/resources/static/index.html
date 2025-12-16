@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocer PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">Grocer</div>
+    <nav>
+        <a href="#">Grocery</a>
+        <a href="#">Deals</a>
+        <a href="#">Contact</a>
+        <div id="cart-items">Cart: 0</div>
+    </nav>
+</header>
+
+<main>
+    <div class="product-grid" id="product-grid">
+        <!-- Products dynamically inserted here -->
+    </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'));
+    }
+</script>
+</body>
+</html>
