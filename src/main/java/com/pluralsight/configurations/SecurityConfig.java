@@ -9,6 +9,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,16 +29,18 @@ public class SecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                // 🔥 We use JWT, not sessions
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
-                // 🔓 Public endpoints
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
@@ -53,7 +57,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                // 🔐 JWT filter
+
                 .addFilterBefore(
                         (Filter) new JWTFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class
@@ -64,7 +68,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 🌍 CORS (for PWA)
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

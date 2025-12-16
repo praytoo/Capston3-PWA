@@ -12,7 +12,6 @@ import java.util.Map;
 public interface ShoppingCartDao
 {
     ShoppingCart getByUserId(Integer userId);
-    // add additional method signatures here
     Map<Integer, ShoppingCartItem> getCart(Integer userId);
     void addProduct(Integer userId, Integer productId, Integer quantity);
     void updateCart(Integer userId, Integer productId, ShoppingCartItem shoppingCartItem);
