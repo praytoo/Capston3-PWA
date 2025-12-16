@@ -40,8 +40,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-                        .requestMatchers("/manifest.json", "/service-worker.js", "/index.html").permitAll()
-                        .requestMatchers("/static/**").permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/manifest.json",
+                                "/sw.js",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/icons/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
 

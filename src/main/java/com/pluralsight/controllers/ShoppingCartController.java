@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
         import java.math.BigDecimal;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.Map;
 
 @RestController
@@ -33,7 +34,6 @@ public class ShoppingCartController {
         this.userService = userService;
         this.productService = productService;
     }
-/*
     // GET /cart - Get current user's cart
     @GetMapping
     public ShoppingCart getCart(Principal principal) {
@@ -52,7 +52,7 @@ public class ShoppingCartController {
 
         return cart;
     }
-
+/*
     // POST /cart/products/15?quantity=2 - Add product to cart (existing method)
     @PostMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -64,6 +64,8 @@ public class ShoppingCartController {
         shoppingCartService.addProduct(productId, quantity, principal);
         return buildCart(principal);
     }
+
+
 
     // POST /cart - Add product to cart (NEW - for your frontend)
     // This accepts JSON body: { "productId": 1, "quantity": 1 }
@@ -79,6 +81,8 @@ public class ShoppingCartController {
         shoppingCartService.addProduct(productId, quantity, principal);
         return buildCart(principal);
     }
+
+ */
 
     // PUT /cart/products/15 - Update product quantity in cart
     @PutMapping("/products/{productId}")
@@ -125,19 +129,21 @@ public class ShoppingCartController {
         return cart;
     }
 
- */
-    @PostMapping
-    public ShoppingCart addToCart(@RequestBody CartRequest request) {
+@PostMapping
+public ShoppingCart addToCart(@RequestBody AddToCartRequest request) {
+    String username = SecurityUtils.getCurrentUsername()
+            .orElseThrow(() -> new RuntimeException("Not authenticated"));
 
-        String username = SecurityUtils.getCurrentUsername()
-                .orElseThrow(() -> new RuntimeException("Not authenticated"));
-
-        ShoppingCart cart = shoppingCartService.getOrCreateCart(username);
-
-        cart.add(request.getProductId(), request.getQuantity());
-
-        return shoppingCartService.save(cart);
+    try {
+        return shoppingCartService.addProduct(
+                request.getProductId(),
+                request.getQuantity() != null ? request.getQuantity() : 1,
+                username
+        );
+    } catch (SQLException e) {
+        throw new RuntimeException("Failed to add product to cart", e);
     }
+}
 
     // DTO for request body
     public static class AddToCartRequest {

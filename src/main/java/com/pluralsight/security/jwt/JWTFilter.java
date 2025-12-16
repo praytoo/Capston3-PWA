@@ -6,17 +6,33 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Date;
 
 @Component
-public class JWTFilter {
+public class JWTFilter implements Filter{
 
     private final String jwtSecret = "YOUR_SECRET_KEY_HERE";
     private final long jwtExpirationMs = 86400000; // 24 hours
 
     public JWTFilter(TokenProvider tokenProvider) {
+    }
+
+
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
     }
 
     // 🔐 Validate token

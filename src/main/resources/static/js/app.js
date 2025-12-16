@@ -1,4 +1,4 @@
-const API_BASE_URL = window.navigator.onLine ? 'https://localhost:8443' : '/products.json';
+const API_BASE_URL = 'http://localhost:8081';
 
 const logoutBtn = document.getElementById("logout-btn");
 const authContainer = document.getElementById("auth-container");
