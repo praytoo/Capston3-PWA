@@ -81,8 +81,7 @@ public class ShoppingCartController {
         shoppingCartService.addProduct(productId, quantity, principal);
         return buildCart(principal);
     }
-
- */
+    */
 
     // PUT /cart/products/15 - Update product quantity in cart
     @PutMapping("/products/{productId}")
