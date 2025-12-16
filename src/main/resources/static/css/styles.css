@@ -1,6 +1,62 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.login-form input {
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #222;
+  color: #fff;
+}
+
+.login-form input::placeholder {
+  color: #888;
+}
+
+.login-form button {
+  padding: 12px;
+  background-color: #000;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.login-form button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.login-message {
+  margin-top: 1rem;
+  color: #f33;
+  font-weight: bold;
+}
+
+.app-container {
+  padding: 2rem;
+}
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #000;
     color: #fff;
 }
@@ -8,65 +64,60 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background-color: #111;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #222;
 }
 
-header .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+header h1 {
+    margin: 0;
 }
 
-header nav a {
-    margin: 0 1rem;
+nav a {
     color: #fff;
+    margin-right: 1rem;
     text-decoration: none;
 }
 
-header nav a:hover {
-    color: #0f0;
-}
-
-.product-grid {
+#product-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .product-card {
     background-color: #111;
-    border: 1px solid #333;
+    border: 1px solid #222;
     padding: 1rem;
     border-radius: 8px;
-    text-align: center;
+}
+.auth-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: center;
 }
 
-.product-card img {
-    max-width: 100%;
-    border-radius: 8px;
+.auth-tabs button {
+  flex: 1;
+  padding: 10px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
 }
 
-.product-card h4 {
-    margin: 0.5rem 0;
+.auth-tabs button.active {
+  border-bottom: 2px solid #fff;
 }
 
-.product-card p {
-    font-size: 0.9rem;
-    color: #ccc;
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
 }
 
-.product-card button {
-    background-color: #0f0;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-top: 0.5rem;
-}
 
-.product-card button:hover {
-    background-color: #0c0;
-}

@@ -1,14 +1,15 @@
-package org.yearup.data.mysql;
+package com.pluralsight.data.mysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.yearup.models.Profile;
-import org.yearup.data.ProfileDao;
-import org.yearup.models.ShoppingCart;
+import com.pluralsight.data.ProfileDao;
+import com.pluralsight.models.Profile;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Repository
 public class MySqlProfileDaoImpl extends MySqlDaoBase implements ProfileDao

@@ -1,16 +1,12 @@
-package org.yearup.data.mysql;
+package com.pluralsight.data.mysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.yearup.data.OrderDao;
-import org.yearup.models.Orders;
-import org.yearup.models.ShoppingCartItem;
-import org.yearup.models.User;
+import com.pluralsight.data.OrderDao;
+import com.pluralsight.models.ShoppingCartItem;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDate;
 
 @Repository
 public class MySqlOrderDaoImpl extends MySqlDaoBase implements OrderDao {

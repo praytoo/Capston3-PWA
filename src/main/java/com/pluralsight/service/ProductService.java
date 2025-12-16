@@ -1,9 +1,10 @@
-package org.yearup.service;
+package com.pluralsight.service;
 
+import com.pluralsight.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yearup.data.ProductDao;
-import org.yearup.models.Product;
+import com.pluralsight.data.ProductDao;
+import com.pluralsight.models.Product;
 
 import java.math.BigDecimal;
 import java.util.List;

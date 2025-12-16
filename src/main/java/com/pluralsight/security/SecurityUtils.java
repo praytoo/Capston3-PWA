@@ -1,4 +1,4 @@
-package org.yearup.security;
+package com.pluralsight.security;
 
 
 import org.slf4j.Logger;

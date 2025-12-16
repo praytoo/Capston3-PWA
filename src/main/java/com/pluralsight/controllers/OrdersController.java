@@ -1,11 +1,11 @@
-package org.yearup.controllers;
+package com.pluralsight.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.yearup.models.Orders;
-import org.yearup.models.User;
-import org.yearup.service.OrderService;
-import org.yearup.service.UserService;
+import com.pluralsight.models.Orders;
+import com.pluralsight.models.User;
+import com.pluralsight.service.OrderService;
+import com.pluralsight.service.UserService;
 
 import java.security.Principal;
 
@@ -26,6 +26,6 @@ public class OrdersController {
     public Orders checkOutOrder(Principal principal) {
         String username = principal.getName();
         User user = userService.getByUserName(username);
-        return orderService.checkOutOrder(user);
+        return orderService.checkOutOrder(user.getId());
     }
 }

@@ -1,7 +1,8 @@
-package org.yearup.models.authentication;
+package com.pluralsight.models.authentication;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.yearup.models.User;
+import com.pluralsight.models.User;
+import com.pluralsight.models.User;
 
 /*
     The acronym DTO is being used for "data transfer object". It means that this type of class is specifically

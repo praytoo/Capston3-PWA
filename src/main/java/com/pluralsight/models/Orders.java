@@ -1,4 +1,4 @@
-package org.yearup.models;
+package com.pluralsight.models;
 
 import java.util.Date;
 

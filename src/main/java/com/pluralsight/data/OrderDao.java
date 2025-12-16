@@ -1,11 +1,7 @@
-package org.yearup.data;
+package com.pluralsight.data;
 
 import org.springframework.stereotype.Component;
-import org.yearup.models.Orders;
-import org.yearup.models.ShoppingCartItem;
-import org.yearup.models.User;
-
-import java.math.BigDecimal;
+import com.pluralsight.models.ShoppingCartItem;
 
 @Component
 public interface OrderDao {

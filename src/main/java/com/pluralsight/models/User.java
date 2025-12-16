@@ -1,7 +1,7 @@
-package org.yearup.models;
+package com.pluralsight.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.yearup.models.authentication.Authority;
+import com.pluralsight.models.authentication.Authority;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,7 +11,17 @@ public class User {
 
    private int id;
    private String username;
-   @JsonIgnore
+   private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @JsonIgnore
    private String password;
    @JsonIgnore
    private boolean activated;
@@ -69,14 +79,15 @@ public class User {
       this.authorities = authorities;
    }
 
-   public void setAuthorities(String authorities) {
-      String[] roles = authorities.split(",");
-      for(String role : roles) {
-         addRole(role);
-      }
-   }
+    public void setAuthorities(String authorities) {
+        String[] roles = authorities.split(",");
+        for (String role : roles) {
+            addRole(role);
+        }
+    }
 
-   public void addRole(String role)
+
+    public void addRole(String role)
    {
       String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
       this.authorities.add(new Authority(authority));

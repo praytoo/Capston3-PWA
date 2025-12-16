@@ -1,4 +1,4 @@
-package org.yearup.models.authentication;
+package com.pluralsight.models.authentication;
 
 import java.util.Objects;
 
@@ -6,7 +6,11 @@ public class Authority {
 
    private String name;
 
-   public String getName() {
+    public Authority() {
+
+    }
+
+    public String getName() {
       return name;
    }
 

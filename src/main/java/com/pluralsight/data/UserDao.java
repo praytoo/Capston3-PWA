@@ -1,7 +1,8 @@
-package org.yearup.data;
+package com.pluralsight.data;
 
+import com.pluralsight.models.RegisterRequest;
 import org.springframework.stereotype.Component;
-import org.yearup.models.User;
+import com.pluralsight.models.User;
 
 import java.util.List;
 
@@ -19,4 +20,11 @@ public interface UserDao {
     User create(User user);
 
     boolean exists(String username);
+
+    RegisterRequest registerAndReturnToken(RegisterRequest request);
+
+    void save(User user);
+
+
+    User findByUsername(String username);
 }

@@ -1,13 +1,14 @@
-package org.yearup.service;
+package com.pluralsight.service;
 
+import com.pluralsight.models.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yearup.data.OrderDao;
-import org.yearup.data.ShoppingCartDao;
-import org.yearup.data.UserDao;
-import org.yearup.models.Orders;
-import org.yearup.models.ShoppingCartItem;
-import org.yearup.models.User;
+import com.pluralsight.data.OrderDao;
+import com.pluralsight.data.ShoppingCartDao;
+import com.pluralsight.data.UserDao;
+import com.pluralsight.models.Orders;
+import com.pluralsight.models.ShoppingCartItem;
+import com.pluralsight.models.User;
 
 import java.util.List;
 
@@ -24,17 +25,21 @@ public class OrderService {
         this.userDao = userDao;
     }
 
-    public Orders checkOutOrder(User user){
-        List<ShoppingCartItem> cartItems = shoppingCartDao.getItemsByUserId(user.getId());
+    public Orders checkOutOrder(int user){
+        List<ShoppingCartItem> cartItems = shoppingCartDao.getItemsByUserId(getId(user));
         if (cartItems.isEmpty()){
             throw new RuntimeException("Cart is empty");
         }
-        Integer orderId = orderDao.createOrder(user.getId());
+        Integer orderId = orderDao.createOrder(getId(user));
         for (ShoppingCartItem item : cartItems){
             orderDao.addOrderLineItem(orderId, item);
         }
-        shoppingCartDao.clearCart(user.getId());
+        shoppingCartDao.clearCart(getId(user));
         return null;
+    }
+
+    private Integer getId(int user) {
+        return 0;
     }
 
 }

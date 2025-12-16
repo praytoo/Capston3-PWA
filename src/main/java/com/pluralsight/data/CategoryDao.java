@@ -1,7 +1,7 @@
-package org.yearup.data;
+package com.pluralsight.data;
 
 import org.springframework.stereotype.Component;
-import org.yearup.models.Category;
+import com.pluralsight.models.Category;
 
 import java.util.List;
 

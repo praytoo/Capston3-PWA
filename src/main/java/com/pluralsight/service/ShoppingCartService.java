@@ -1,62 +1,84 @@
-package org.yearup.service;
+package com.pluralsight.service;
 
+import com.pluralsight.data.ShoppingCartDao;
+import com.pluralsight.data.UserDao;
+import com.pluralsight.models.ShoppingCart;
+import com.pluralsight.models.ShoppingCartItem;
+import com.pluralsight.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.yearup.data.ShoppingCartDao;
-import org.yearup.models.Product;
-import org.yearup.models.ShoppingCart;
-import org.yearup.models.ShoppingCartItem;
-import org.yearup.models.User;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Service
 public class ShoppingCartService {
-    private ShoppingCartDao shoppingCartDao;
-    private UserService userService;
+
+    private final ShoppingCartDao shoppingCartDao;
+    private final UserDao userDao;
 
     @Autowired
-    public ShoppingCartService(ShoppingCartDao shoppingCartDao, UserService userService) {
+    public ShoppingCartService(ShoppingCartDao shoppingCartDao, UserDao userDao) {
         this.shoppingCartDao = shoppingCartDao;
-        this.userService = userService;
+        this.userDao = userDao;
     }
 
-    public ShoppingCart getByUserId(Integer userId){
-        return shoppingCartDao.getByUserId(userId);
+    public ShoppingCart getOrCreateCart(String username) {
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found: " + username);
+        }
+
+        ShoppingCart cart = shoppingCartDao.findByUserId(user.getId());
+
+        if (cart == null) {
+            cart = new ShoppingCart();
+            cart.setUser(user);
+            cart.setItems(new ArrayList<>());
+            shoppingCartDao.create(cart);
+        } else if (cart.getItems() == null) {
+            cart.setItems(new ArrayList<>());
+        }
+
+        return cart;
     }
-    public Map<Integer, ShoppingCartItem> getCart(Principal principal){
-        String username = principal.getName();
-        User user = userService.getByUserName(username);
-        Integer userId = user.getId();
-        return shoppingCartDao.getCart(userId);
+/*
+    public ShoppingCart addProduct(int productId, int quantity, String username) throws SQLException {
+        ShoppingCart cart = getOrCreateCart(username);
+
+        ShoppingCartItem item = null;
+        // Loop through items to find if it already exists
+        for (ShoppingCartItem i : cart) {
+            if (i.getProductId() == productId) {
+                item = i;
+                break;
+            }
+        }
+
+        // If not found, create a new item
+        if (item == null) {
+            item = new ShoppingCartItem();
+            item.setProductId(productId);
+            item.setQuantity(0);
+            cart.getItems().add(item);
+        }
+
+        // Update quantity
+        item.setQuantity(item.getQuantity() + quantity);
+
+        // Save cart + items through DAO
+        shoppingCartDao.saveCartAndItems(cart);
+
+        return cart;
     }
-    public void addProduct(Integer productId, Integer quantity, Principal principal){
-       String username = principal.getName();
-       User user = userService.getByUserName(username);
-       Integer userId = user.getId();
-       shoppingCartDao.addProduct(userId, productId, quantity);
-    }
-    public void updateCart(Integer productId, ShoppingCartItem shoppingCartItem, Principal principal){
-        String username = principal.getName();
-        User user = userService.getByUserName(username);
-        Integer userId = user.getId();
-        shoppingCartDao.updateCart(userId, productId, shoppingCartItem);
-    }
-    /*
-    public void deleteCart(ShoppingCart shoppingCart, Principal principal){
-        String username = principal.getName();
-        User user = userService.getByUserName(username);
-        Integer userId = user.getId();
-        shoppingCartDao.deleteCart(userId, shoppingCart);
-    }
-    */
-    public void clearCart(Principal principal){
-        String username = principal.getName();
-        User user = userService.getByUserName(username);
-        Integer userId = user.getId();
-        shoppingCartDao.clearCart(userId);
+
+ */
+
+    public ShoppingCart save(ShoppingCart cart) {
+        if (cart.getItems() == null) {
+            cart.setItems(new ArrayList<>());
+        }
+        shoppingCartDao.update(cart);
+        return cart;
     }
 }

@@ -1,6 +1,7 @@
-package org.yearup.models;
+package com.pluralsight.models;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,25 @@ public class ShoppingCart
     private Integer quantity;
     private BigDecimal total;
     private Map<Integer, ShoppingCartItem> items = new HashMap<>();
+    private List<ShoppingCartItem> items2 = new ArrayList<>();
+    private User user;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void setTotal(BigDecimal total) {
         this.total = total;
@@ -61,6 +81,8 @@ public class ShoppingCart
     {
         this.items = items;
     }
+    public void setItems(List<Object> items)
+    {}
 
     public boolean contains(Integer productId)
     {
@@ -85,6 +107,9 @@ public class ShoppingCart
                                 .reduce( BigDecimal.ZERO, (lineTotal, subTotal) -> subTotal.add(lineTotal));
 
         return total;
+    }
+
+    public void add(Integer productId, Integer quantity) {
     }
 
 }

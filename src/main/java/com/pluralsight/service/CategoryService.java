@@ -1,11 +1,11 @@
-package org.yearup.service;
+package com.pluralsight.service;
 
+import com.pluralsight.models.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yearup.data.CategoryDao;
-import org.yearup.models.Category;
+import com.pluralsight.data.CategoryDao;
+import com.pluralsight.models.Category;
 
-import javax.validation.constraints.AssertFalse;
 import java.util.List;
 
 @Service

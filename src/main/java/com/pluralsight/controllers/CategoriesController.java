@@ -1,16 +1,14 @@
-package org.yearup.controllers;
+package com.pluralsight.controllers;
 
+import com.pluralsight.models.Category;
+import com.pluralsight.models.Product;
+import com.pluralsight.service.CategoryService;
+import com.pluralsight.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.yearup.data.CategoryDao;
-import org.yearup.data.ProductDao;
-import org.yearup.models.Category;
-import org.yearup.models.Product;
-import org.yearup.service.CategoryService;
-import org.yearup.service.ProductService;
+
 
 import java.util.List;
 

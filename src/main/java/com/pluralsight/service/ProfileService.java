@@ -1,10 +1,10 @@
-package org.yearup.service;
+package com.pluralsight.service;
 
+import com.pluralsight.models.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
-import org.yearup.data.ProfileDao;
-import org.yearup.models.Profile;
+import com.pluralsight.data.ProfileDao;
+import com.pluralsight.models.Profile;
 
 @Service
 public class ProfileService {

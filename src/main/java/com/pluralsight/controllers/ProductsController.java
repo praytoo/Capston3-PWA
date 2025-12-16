@@ -1,13 +1,12 @@
-package org.yearup.controllers;
+package com.pluralsight.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.yearup.models.Product;
-import org.yearup.data.ProductDao;
-import org.yearup.service.ProductService;
+import com.pluralsight.models.Product;
+import com.pluralsight.service.ProductService;
 
 import java.math.BigDecimal;
 import java.util.List;

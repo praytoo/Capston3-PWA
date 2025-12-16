@@ -1,8 +1,8 @@
-package org.yearup.data;
+package com.pluralsight.data;
 
 
 import org.springframework.stereotype.Component;
-import org.yearup.models.Profile;
+import com.pluralsight.models.Profile;
 
 @Component
 public interface ProfileDao

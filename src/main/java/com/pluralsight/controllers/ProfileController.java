@@ -1,13 +1,12 @@
-package org.yearup.controllers;
+package com.pluralsight.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.yearup.models.Profile;
-import org.yearup.models.User;
-import org.yearup.service.ProfileService;
-import org.yearup.service.UserService;
+import com.pluralsight.models.Profile;
+import com.pluralsight.models.User;
+import com.pluralsight.service.ProfileService;
+import com.pluralsight.service.UserService;
 
 import java.security.Principal;
 

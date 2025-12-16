@@ -1,14 +1,12 @@
-package org.yearup.data.mysql;
+package com.pluralsight.data.mysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.yearup.data.CategoryDao;
-import org.yearup.models.Category;
+import com.pluralsight.data.CategoryDao;
+import com.pluralsight.models.Category;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

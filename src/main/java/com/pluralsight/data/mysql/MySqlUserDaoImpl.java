@@ -1,16 +1,19 @@
-package org.yearup.data.mysql;
+package com.pluralsight.data.mysql;
 
+import com.pluralsight.models.RegisterRequest;
+import com.pluralsight.models.authentication.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.yearup.data.UserDao;
-import org.yearup.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Repository;
+import com.pluralsight.data.UserDao;
+import com.pluralsight.models.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class MySqlUserDaoImpl extends MySqlDaoBase implements UserDao
@@ -147,6 +150,11 @@ public class MySqlUserDaoImpl extends MySqlDaoBase implements UserDao
         return user != null;
     }
 
+    @Override
+    public RegisterRequest registerAndReturnToken(RegisterRequest request) {
+        return null;
+    }
+
     private User mapRow(ResultSet row) throws SQLException
     {
         int userId = row.getInt("user_id");
@@ -156,4 +164,33 @@ public class MySqlUserDaoImpl extends MySqlDaoBase implements UserDao
 
         return new User(userId, username,hashedPassword, role);
     }
+
+    public void save(User user) {
+
+        String sql = """
+        INSERT INTO users (username, hashed_password, role)
+        VALUES (?, ?, ?)
+    """;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+
+            stmt.setString(3, user.getRole());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to register user", e);
+        }
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return null;
+    }
+
+
 }

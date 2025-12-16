@@ -1,22 +1,18 @@
-package org.yearup.models.authentication;
+package com.pluralsight.models.authentication;
 
-import javax.validation.constraints.NotEmpty;
-/*
-    The acronym DTO is being used for "data transfer object". It means that this type of class is specifically
-    created to transfer data between the client and the server. For example, CredentialsDto represents the data a client must
-    pass to the server for a login endpoint, and TokenDto represents the object that's returned from the server
-    to the client from a login endpoint.
- */
 public class RegisterUserDto {
-
-    @NotEmpty
     private String username;
-    @NotEmpty
     private String password;
-    @NotEmpty
-    private String confirmPassword;
-    @NotEmpty(message = "Please select a role for this user.")
     private String role;
+
+    public RegisterUserDto() {
+    }
+
+    public RegisterUserDto(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     public String getUsername() {
         return username;
@@ -34,19 +30,20 @@ public class RegisterUserDto {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
-        this.role = role;
+        // Default to USER if role is null or empty
+        this.role = (role == null || role.isEmpty()) ? "USER" : role;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisterUserDto{" +
+                "username='" + username + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

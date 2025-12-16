@@ -1,4 +1,4 @@
-package org.yearup.models;
+package com.pluralsight.models;
 
 import java.math.BigDecimal;
 
@@ -8,6 +8,11 @@ public class ShoppingCartItem
     private int quantity = 1;
     private BigDecimal discountPercent = BigDecimal.ZERO;
     private BigDecimal price;
+    private Integer productId;
+
+    public ShoppingCartItem() {
+
+    }
 
     public BigDecimal getPrice() {
         return price;
@@ -69,5 +74,11 @@ public class ShoppingCartItem
         BigDecimal discountAmount = subTotal.multiply(discountPercent);
 
         return subTotal.subtract(discountAmount);
+    }
+
+    public void setProductId(int productId) {
+    }
+
+    public void setId(int id) {
     }
 }

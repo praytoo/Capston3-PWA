@@ -1,4 +1,4 @@
-package org.yearup.models;
+package com.pluralsight.models;
 
 public class Profile
 {

@@ -1,13 +1,10 @@
-package org.yearup.data;
+package com.pluralsight.data;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.yearup.models.Product;
-import org.yearup.models.ShoppingCart;
-import org.yearup.models.ShoppingCartItem;
-import org.yearup.service.ShoppingCartService;
+import com.pluralsight.models.ShoppingCart;
+import com.pluralsight.models.ShoppingCartItem;
 
-import java.security.Principal;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +19,11 @@ public interface ShoppingCartDao
     //void deleteCart(Integer userId, ShoppingCart shoppingCart);
     List<ShoppingCartItem> getItemsByUserId(Integer userId);
     void clearCart(Integer userId);
+    ShoppingCart findByUserId(int userId);
+
+    void create(ShoppingCart cart);
+
+    void update(ShoppingCart cart);
+
+    void saveCartAndItems(ShoppingCart cart) throws SQLException;
 }
