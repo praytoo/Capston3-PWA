@@ -18,10 +18,10 @@ if (token) {
 // Product loading
 async function loadProducts() {
     try {
-        const res = await fetch('http://localhost:8081/products'); // ✅ Changed to 8081
+        const res = await fetch('http://localhost:8081/products');
         if (!res.ok) throw new Error('Failed to fetch products');
         const products = await res.json();
-        const list = document.getElementById('products'); // ✅ Changed to match HTML
+        const list = document.getElementById('product-list');
         list.innerHTML = '';
 
         products.forEach(p => {
@@ -30,15 +30,15 @@ async function loadProducts() {
             card.innerHTML = `
                 <h2>${p.name}</h2>
                 <p>$${p.price.toFixed(2)}</p>
-                <button onclick="addToCart(${p.productId})">Add to Cart</button>
+                <button onclick="addToCart(${p.id})">Add to Cart</button>
             `;
             list.appendChild(card);
         });
     } catch (err) {
         console.error('Error loading products:', err);
-        document.getElementById('products').innerHTML = '<p>Failed to load products. Please try again.</p>';
     }
 }
+
 // Update cart count
 function updateCartCount(count) {
     const cartCount = document.getElementById('cart-count');
@@ -225,7 +225,7 @@ async function removeFromCart(productId) {
     }
 
     try {
-        const res = await fetch(`http://localhost:8081/cart/products/${productId}`, {
+        const res = await fetch(`localhost:8081/cart/products/${productId}`, {
             method: 'DELETE',
             headers: {
                 "Authorization": "Bearer " + token
@@ -348,44 +348,49 @@ if (loginTab && registerTab) {
 }
 
 // LOGIN
-// Login form submission
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
+if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        loginMessage.textContent = 'Logging in...';
+        loginMessage.style.color = '#666';
 
-    const username = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
 
-    try {
-        const response = await fetch('http://localhost:8081/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
+        try {
+            const res = await fetch("http://localhost:8081/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: email,  // Backend expects 'username'
+                    password: password
+                })
+            });
 
-        if (!response.ok) {
-            throw new Error('Login failed');
+            if (!res.ok) {
+                const errorData = await res.text();
+                throw new Error(errorData || "Login failed!");
+            }
+
+            const data = await res.json();
+            localStorage.setItem("token", data.token);
+
+            // Hide auth, show app
+            authContainer.style.display = "none";
+            appContainer.style.display = "block";
+            logoutBtn.style.display = "inline-block"; // ✅ ADD THIS
+
+            loginMessage.textContent = '';
+            loadProducts();
+
+        } catch (err) {
+            console.error('Login error:', err);
+            loginMessage.textContent = err.message;
+            loginMessage.style.color = '#d32f2f';
         }
+    });
+}
 
-        const data = await response.json();
-
-        // Save the token
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-
-        // Hide login, show app
-        document.getElementById('auth-container').style.display = 'none';
-        document.getElementById('app-container').style.display = 'block';
-
-        // Load products or whatever your app needs
-        loadProducts(); // or whatever function loads your main app
-
-    } catch (error) {
-        console.error('Login error:', error);
-        document.getElementById('login-message').textContent = 'Login failed. Please check your credentials.';
-    }
-});
 // REGISTER
 if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
