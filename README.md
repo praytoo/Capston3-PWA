@@ -1,4 +1,4 @@
-# Your Family Grocer – Full Stack E-Commerce Application
+# Your Family Grocer – Full Stack E-Commerce PWA
 
 ## 📚 Table of Contents
 
@@ -18,11 +18,10 @@ Your Family Grocer is a full-stack e-commerce application that allows users to b
 The application supports:
 
 - User registration and login
-- Product browsing by categories
 - Shopping cart functionality
 - Checkout process with order placement
 - Persistent user sessions via JWT
-- Responsive and installable PWA
+- Responsive PWA
 
 ---
 
@@ -37,7 +36,6 @@ The application supports:
 
 **Frontend:**
 - HTML, CSS, JavaScript
-- Mustache.js templating
 - Progressive Web App (PWA)
 - Axios for API requests
 
@@ -52,11 +50,9 @@ The application supports:
 ## ✨ Features
 
 - **User Authentication:** Login, registration, and JWT-based secure sessions.
-- **Product Catalog:** Browse, filter, and search products.
-- **Shopping Cart:** Add, remove, and clear items; dynamic cart total calculation.
+- **Product Catalog:** Browse products.
+- **Shopping Cart:** Add items; dynamic cart total calculation.
 - **Checkout:** Review cart items, see totals, and place orders.
-- **PWA Support:** Offline caching, installable on desktop and mobile.
-- **Responsive Design:** Works across mobile, tablet, and desktop devices.
 
 ---
 
@@ -67,8 +63,8 @@ The application supports:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/praytoo/Capstone3-YourFamilyGrocerApp.git
-cd Capstone3-YourFamilyGrocerApp/capstone-api-starter
+git clone https://github.com/praytoo/Capstone3-PWA.git
+cd Capstone3-PWA
 ```
 2. Configure application.properties for your local MySQL:
 
