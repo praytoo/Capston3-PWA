@@ -26,7 +26,6 @@ public class ShoppingCartController {
 
     @Autowired
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
-        System.out.println("CTOR this=" + System.identityHashCode(this));
         this.shoppingCartService = shoppingCartService;
     }
 
@@ -35,12 +34,7 @@ public class ShoppingCartController {
     public ShoppingCart getCart(Principal principal) {
         Map<Integer, ShoppingCartItem> items = shoppingCartService.getCart(principal);
 
-        BigDecimal total = items.values().stream()
-                .map(i ->
-                        i.getProduct().getPrice()
-                                .multiply(BigDecimal.valueOf(i.getQuantity()))
-                )
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = calculateTotal(items);
 
         ShoppingCart cart = new ShoppingCart();
         cart.setItems(items);
@@ -85,12 +79,7 @@ public class ShoppingCartController {
 
         Map<Integer, ShoppingCartItem> items = shoppingCartService.getCart(principal);
 
-        BigDecimal total = items.values().stream()
-                .map(i ->
-                        i.getProduct().getPrice()
-                                .multiply(BigDecimal.valueOf(i.getQuantity()))
-                )
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = calculateTotal(items);
 
         ShoppingCart cart = new ShoppingCart();
         cart.setItems(items);
@@ -106,12 +95,7 @@ public class ShoppingCartController {
         shoppingCartService.updateCart(productId, shoppingCartItem, principal);
         Map<Integer, ShoppingCartItem> items = shoppingCartService.getCart(principal);
 
-        BigDecimal total = items.values().stream()
-                .map(i ->
-                        i.getProduct().getPrice()
-                                .multiply(BigDecimal.valueOf(i.getQuantity()))
-                )
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = calculateTotal(items);
 
         ShoppingCart cart = new ShoppingCart();
         cart.setItems(items);
@@ -126,12 +110,7 @@ public class ShoppingCartController {
         shoppingCartService.clearCart(principal);
         Map<Integer, ShoppingCartItem> items = shoppingCartService.getCart(principal);
 
-        BigDecimal total = items.values().stream()
-                .map(i ->
-                        i.getProduct().getPrice()
-                                .multiply(BigDecimal.valueOf(i.getQuantity()))
-                )
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = calculateTotal(items);
 
         ShoppingCart cart = new ShoppingCart();
         cart.setItems(items);
@@ -142,19 +121,24 @@ public class ShoppingCartController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private ShoppingCart buildCart(Principal principal) {
-        System.out.println("CTOR this=" + System.identityHashCode(this));
+    public ShoppingCart buildCart(Principal principal) {
         Map<Integer, ShoppingCartItem> items = shoppingCartService.getCart(principal);
 
-        BigDecimal total = items.values().stream()
-                .map(i -> i.getProduct().getPrice()
-                        .multiply(BigDecimal.valueOf(i.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = calculateTotal(items);
 
         ShoppingCart cart = new ShoppingCart();
         cart.setItems(items);
         cart.setTotal(total);
 
         return cart;
+    }
+
+    public BigDecimal calculateTotal(Map<Integer, ShoppingCartItem> items) {
+        return items.values().stream()
+                .map(item ->
+                        item.getProduct().getPrice()
+                                .multiply(BigDecimal.valueOf(item.getQuantity()))
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

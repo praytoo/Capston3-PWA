@@ -9,10 +9,7 @@ public class EasyshopApplication
 {
 
     public static void main(String[] args) {
-        ApplicationContext AC = SpringApplication.run(EasyshopApplication.class, args);
-        for(String name : AC.getBeanDefinitionNames()){
-            System.out.println(name);
+        SpringApplication.run(EasyshopApplication.class, args);
         }
     }
 
-}

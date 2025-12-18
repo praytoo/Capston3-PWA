@@ -30,7 +30,7 @@ async function loadProducts() {
             card.innerHTML = `
                 <h2>${p.name}</h2>
                 <p>$${p.price.toFixed(2)}</p>
-                <button onclick="addToCart(${p.id})">Add to Cart</button>
+                <button onclick="addToCart(${p.productId})">Add to Cart</button>
             `;
             list.appendChild(card);
         });
@@ -69,7 +69,7 @@ function addToCart(productId, quantity = 1) {
         button.textContent = 'Adding...';
     }
 
-    fetch("http://localhost:8081/cart", {
+fetch("http://localhost:8081/cart/products/" + productId + "?quantity=" + quantity, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -100,10 +100,12 @@ function addToCart(productId, quantity = 1) {
         alert('Product added to cart!');
 
         // Update cart count in UI
-        if (cart.items) {
-            const itemCount = Object.keys(cart.items).length;
-            updateCartCount(itemCount);
-        }
+        // Update cart count in header
+                const itemCount = cart.items ? Object.keys(cart.items).length : 0;
+                const cartLink = document.querySelector('nav a[onclick*="viewCart"]');
+                if (cartLink) {
+                    cartLink.textContent = `View Cart (${itemCount})`;
+                }
 
         // Reset button state
         if (button) {
@@ -280,39 +282,6 @@ async function clearCart() {
     } catch (err) {
         console.error('Error clearing cart:', err);
         alert('Failed to clear cart');
-    }
-}
-
-// Load cart
-async function loadCart() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        console.log('No token, user not logged in');
-        return;
-    }
-
-    try {
-        const res = await fetch('http://localhost:8081/cart', {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        if (!res.ok) throw new Error('Failed to load cart');
-
-        const cart = await res.json();
-        const list = document.getElementById('cart-list');
-
-        if (list && cart.items) {
-            list.innerHTML = '';
-            cart.items.forEach(i => {
-                const li = document.createElement('li');
-                li.textContent = `${i.product.name} x ${i.quantity} = $${(i.product.price * i.quantity).toFixed(2)}`;
-                list.appendChild(li);
-            });
-        }
-    } catch (err) {
-        console.error('Error loading cart:', err);
     }
 }
 
