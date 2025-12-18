@@ -88,6 +88,7 @@ mvn spring-boot:run
 1. Open index.html and use intellij's pop up tab to load the browser
 
 ![img](images/img.png)
+
 2. You can now interact with the PWA, add items to cart, and place orders.
 
 ---
