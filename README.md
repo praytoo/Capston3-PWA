@@ -6,7 +6,7 @@
 - [Tech Stack](#-tech-stack)
 - [Features](#-features)
 - [Installation Run Instructions](#-installation-run-instructions)
-- [Landing Pages](#-landing-pages)
+- [Web Walk Through](#-web-walk-through)
 - [Author](#-author)
 
 ---
@@ -91,7 +91,7 @@ mvn spring-boot:run
 2. You can now interact with the PWA, add items to cart, and place orders.
 
 ---
-## 🖼 Web Walk through
+## 🖼 Web Walk Through
 
 ![PWA](images/PWA.gif)
 
